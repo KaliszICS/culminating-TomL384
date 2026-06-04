@@ -131,32 +131,56 @@ public class PracticeProblem {
 			ip.nextLine();
 		}
 
-		int mixed = 0;
-		int ans = 0;
-		int after = 0;
+		
 		for(int i = 0; i < rounds; i++){
-			System.out.print(base);
-			for (int i1 = 0; i1 < total - 1; i1++){
-				int randomNum = r.nextInt();
-
-				if (operationtype == 5){
-					mixed = r.nextInt();
-				}
-
-				if (operationtype == 5 && i1 == 0){
-					after = mixed;
-				}
-				
-				if (operationtype == 1 || mixed == 1){
-					ans = ans  + randomNum ;
-				}
-				if (operationtype == 2 || mixed == 2){
-					ans = ans - randomNum ;
-				}
-				if (operationtype == 3 || mixed == 3){}
-				if (operationtype == 4 || mixed == 4){}
-				
+			int mixed = 0;
+		    int ans = base;
+			int round = i + 1;
+			System.out.print("Question" + round + ": " + base);
+			if (operationtype == 5){
+				Stack<Double> numbers = new Stack<>();
+				Stack<Character> operators = new Stack<>();
+				for (int i1 = 0; i1 < total - 1; i1++){
+					int randomNum = -10000 + r.nextInt(20001);
+					numbers.push(randomNum);
+					mixed = 1 + r.nextInt(4);
+					if (mixed == 1){
+						operators.push("+");
+					}
+				    if (mixed == 2){
+					    operators.push("-");
+				    }
+				    if (mixed == 3){
+					    operators.push("*");
+				    }
+				    if (mixed == 4){
+					    operators.push("/");
+				    }
+				}			
 			}
+			else{
+				for (int i1 = 0; i1 < total - 1; i1++){
+					int randomNum = -10000 + r.nextInt(20001);
+					if (operationtype == 1){
+						ans = ans  + randomNum ;
+					    System.out.print(" + " + randomNum) ;
+				    }
+				    if (operationtype == 2){
+					    ans = ans - randomNum ;
+					    System.out.print(" - " + randomNum) ;
+				    }
+				    if (operationtype == 3){
+					    ans = ans * randomNum ;
+					    System.out.print(" * " + randomNum) ;
+				    }
+				    if (operationtype == 4){
+					    ans = ans / randomNum ;
+					    System.out.print(" / " + randomNum) ;
+				    }
+				
+			    }
+			}
+			System.out.println(" = ?");
 		}
 	}
 }
