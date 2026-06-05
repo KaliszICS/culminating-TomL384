@@ -51,14 +51,14 @@ public class PracticeProblem {
 
 		System.out.print("Please enter the first number you want in the question: ");
 
-		// Validate integer input
-		while (!(ip.hasNextInt())) {
+		// Validate number input
+		while (!(ip.hasNextDouble())) {
 			ip.nextLine();
 			System.out.println("Invalid Input!");
 			System.out.print("Please enter the first number you want in the question: ");
 		}
 
-		int base = ip.nextInt();
+		double base = ip.nextDouble();
 		ip.nextLine();
 		
 
@@ -134,52 +134,72 @@ public class PracticeProblem {
 		
 		for(int i = 0; i < rounds; i++){
 			int mixed = 0;
-		    int ans = base;
 			int round = i + 1;
 			System.out.print("Question" + round + ": " + base);
-			if (operationtype == 5){
-				Stack<Double> numbers = new Stack<>();
-				Stack<Character> operators = new Stack<>();
-				for (int i1 = 0; i1 < total - 1; i1++){
-					int randomNum = -10000 + r.nextInt(20001);
-					numbers.push(randomNum);
-					mixed = 1 + r.nextInt(4);
-					if (mixed == 1){
-						operators.push("+");
-					}
-				    if (mixed == 2){
-					    operators.push("-");
-				    }
-				    if (mixed == 3){
-					    operators.push("*");
-				    }
-				    if (mixed == 4){
-					    operators.push("/");
-				    }
-				}			
+			
+			Stack<Double> numbers = new Stack<>();
+			Stack<Character> operators = new Stack<>();
+			numbers.push(base);
+
+			for (int i1 = 0; i1 < total - 1; i1++){
+				double randomNum = -10000 + r.nextInt(20001);
+				double randomNum1 = Math.round(randomNum);
+				numbers.push(randomNum1);
+				mixed = 1 + r.nextInt(4);
+				if (operationtype != 5){
+					mixed = 0;
+				}
+
+				if (operationtype == 1 || mixed == 1){
+					operators.push('+');
+					System.out.print(" + " + randomNum1) ;
+				}
+				if (operationtype == 2 || mixed == 2){
+					operators.push('-');
+					System.out.print(" - " + randomNum1) ;
+				}
+
+				double top1 = numbers.peek();
+				if (operationtype == 3 || mixed == 3){
+					System.out.print(" * " + randomNum1) ;
+					numbers.pop();
+					double top2 = numbers.peek();
+					numbers.pop();
+					numbers.push(top2*top1);
+				}
+				if (operationtype == 4 || mixed == 4){
+					System.out.print(" / " + randomNum1) ;
+					numbers.pop();
+					double top2 = numbers.peek();
+					numbers.pop();
+					numbers.push(top2/top1);
+				}
+			}	
+			System.out.println(numbers);	
+			System.out.println(operators);
+
+			while(numbers.size()>1){
+				Character operator = operators.peek();
+				double top1 = numbers.peek();
+				if (operator == '+'){
+					numbers.pop();
+					double top2 = numbers.peek();
+					numbers.pop();
+					numbers.push(top2 + top1);	
+				}
+
+				if (operator == '-'){
+					numbers.pop();
+					double top2 = numbers.peek();
+					numbers.pop();
+					numbers.push(top2 - top1);	
+						
+				}
+				operators.pop();
 			}
-			else{
-				for (int i1 = 0; i1 < total - 1; i1++){
-					int randomNum = -10000 + r.nextInt(20001);
-					if (operationtype == 1){
-						ans = ans  + randomNum ;
-					    System.out.print(" + " + randomNum) ;
-				    }
-				    if (operationtype == 2){
-					    ans = ans - randomNum ;
-					    System.out.print(" - " + randomNum) ;
-				    }
-				    if (operationtype == 3){
-					    ans = ans * randomNum ;
-					    System.out.print(" * " + randomNum) ;
-				    }
-				    if (operationtype == 4){
-					    ans = ans / randomNum ;
-					    System.out.print(" / " + randomNum) ;
-				    }
-				
-			    }
-			}
+					
+			System.out.println(numbers);	
+			System.out.println(operators);
 			System.out.println(" = ?");
 		}
 	}
