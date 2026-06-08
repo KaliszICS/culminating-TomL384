@@ -137,12 +137,15 @@ public class PracticeProblem {
 			int round = i + 1;
 			System.out.print("Question" + round + ": " + base);
 			
-			Stack<Double> numbers = new Stack<>();
-			Stack<Character> operators = new Stack<>();
+			ArrayDeque<Double> numbers = new ArrayDeque<>();
+			ArrayDeque<Character> operators = new ArrayDeque<>();
 			numbers.push(base);
 
 			for (int i1 = 0; i1 < total - 1; i1++){
 				double randomNum = -10000 + r.nextInt(20001);
+				while(randomNum > -0.5 && randomNum < 0.5){
+					randomNum = -10000 + r.nextInt(20001);
+				}
 				double randomNum1 = Math.round(randomNum);
 				numbers.push(randomNum1);
 				mixed = 1 + r.nextInt(4);
@@ -175,32 +178,45 @@ public class PracticeProblem {
 					numbers.push(top2/top1);
 				}
 			}	
-			System.out.println(numbers);	
+			System.out.println("\n" + numbers);	
 			System.out.println(operators);
 
+			
+			
 			while(numbers.size()>1){
-				Character operator = operators.peek();
-				double top1 = numbers.peek();
+				Character operator = operators.peekLast();
+				double top1 = numbers.peekLast();
 				if (operator == '+'){
-					numbers.pop();
-					double top2 = numbers.peek();
-					numbers.pop();
-					numbers.push(top2 + top1);	
+					numbers.removeLast();
+					double top2 = numbers.peekLast();
+					numbers.removeLast();
+					numbers.addLast(top1 + top2);	
 				}
 
 				if (operator == '-'){
-					numbers.pop();
-					double top2 = numbers.peek();
-					numbers.pop();
-					numbers.push(top2 - top1);	
+					numbers.removeLast();
+					double top2 = numbers.peekLast();
+					numbers.removeLast();
+					numbers.addLast(top1 - top2);	
 						
 				}
-				operators.pop();
+				operators.removeLast();
 			}
 					
 			System.out.println(numbers);	
 			System.out.println(operators);
 			System.out.println(" = ?");
+			
+			double polarity = numbers.peek() * -1;
+			numbers.remove();
+			numbers.add(polarity);
+			
+			String ans = numbers.peek() + " ";
+			String reverseans = "";
+			for (int i2 = ans.length()-1 ; i2 >= 0 ; i2 --){
+				reverseans = reverseans + ans.charAt(i2);
+			}
+			System.out.println(reverseans);
 		}
 	}
 }
