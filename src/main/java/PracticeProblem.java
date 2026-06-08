@@ -7,11 +7,7 @@
 
 import java.util.Scanner;
 import java.util.Random;
-import java.util.ArrayList;
 import java.util.ArrayDeque;
-import java.util.HashMap;
-import java.util.Stack;
-import java.util.Queue;
 
 public class PracticeProblem {
 
@@ -131,7 +127,7 @@ public class PracticeProblem {
 			ip.nextLine();
 		}
 
-		
+		int score = 0;
 		for(int i = 0; i < rounds; i++){
 			int mixed = 0;
 			int round = i + 1;
@@ -208,16 +204,44 @@ public class PracticeProblem {
 			System.out.println(" = ?");
 			
 			double polarity = numbers.peek() * -1;
-			numbers.remove();
-			numbers.add(polarity);
 			
-			String ans = numbers.peek() + " ";
+			double answer = polarity;
+            answer = Math.round(answer * 1000.0) / 1000.0;
+            String ans = Double.toString(answer);
 			String reverseans = "";
 			for (int i2 = ans.length()-1 ; i2 >= 0 ; i2 --){
 				reverseans = reverseans + ans.charAt(i2);
 			}
-			System.out.println(reverseans);
+			double reverseans1 = Double.parseDouble(reverseans);
+			System.out.println(reverseans1);
+
+			System.out.println("Please enetr your answer: ");
+
+			while (!(ip.hasNextDouble())) {
+				ip.nextLine();
+			    System.out.println("Invalid Input!");
+			    System.out.print("Please enetr your answer: ");
+		    }
+
+			double playerans = ip.nextDouble();
+			ip.nextLine();
+
+			if (playerans == reverseans1){
+				score ++;
+				System.out.println("Congrats! This is the correct answer!");
+			}
+			else{
+				System.out.println("This is incorrect, the correct answer is " + reverseans1);
+			}
 		}
+		System.out.println("You answered " + score + " out of " + rounds + " questions correctly");
+		if (score > rounds/2){
+			System.out.println("Congrats! You are the ultimate boss of math");
+		}
+		else{
+			System.out.println("You're lowkey fried, just restart your life lil bro");
+		}
+
 	}
 }
 
