@@ -1,0 +1,12 @@
+K(30%): 90%
+I(30%): 90%
+C(10%): 100%
+A(30%): 90%
+91%
+
+Use functions when you are repeating code a lot! (input validation for instance)
+Also use it to break up code and make it easier to read.
+
+Another way to check doubles is to use if (playerans - reverseans1) < 0.0001) to see if it is within a specific amount of each other.
+
+Otherwise great work!
